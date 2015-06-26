@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/dialog_dates_end_date"
+            android:text="@string/dialog_dates_start_date"
             android:textSize="30sp"
             android:textStyle="bold"
             android:textColor="@color/chart_text_color_dark"
@@ -34,7 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/NULL"
-            android:id="@+id/details_activity_target_date"
+            android:id="@+id/details_activity_target_date_up"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:textColor="@color/chart_text_color_dark"
@@ -53,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/details_frag_percent"
-            android:id="@+id/details_activity_percentage"
+            android:id="@+id/details_activity_percentage_up"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0"
             android:textColor="@color/chart_text_color_dark"
@@ -79,7 +79,7 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/details_activity_progress_total"
+        android:id="@+id/details_activity_progress_total_up"
         android:layout_weight="0"
         android:layout_marginBottom="@dimen/activity_vertical_margin"/>
 
@@ -87,7 +87,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/details_activity_months_view">
+        android:id="@+id/details_activity_months_view_up">
 
         <TextView
             android:layout_width="wrap_content"
@@ -102,7 +102,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/NULL"
-            android:id="@+id/details_activity_months_count"
+            android:id="@+id/details_activity_months_count_up"
             android:layout_weight="1"
             android:gravity="right" />
     </LinearLayout>
@@ -111,7 +111,7 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/details_activity_progress_months"
+        android:id="@+id/details_activity_progress_months_up"
         android:layout_weight="0"
         android:layout_marginBottom="@dimen/activity_vertical_margin" />
 
@@ -120,7 +120,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_default_small_margin"
-        android:id="@+id/details_activity_weeks_view">
+        android:id="@+id/details_activity_weeks_view_up">
 
         <TextView
             android:layout_width="wrap_content"
@@ -135,7 +135,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/NULL"
-            android:id="@+id/details_activity_weeks_count"
+            android:id="@+id/details_activity_weeks_count_up"
             android:layout_weight="1"
             android:gravity="right" />
     </LinearLayout>
@@ -144,7 +144,7 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/details_activity_progress_weeks"
+        android:id="@+id/details_activity_progress_weeks_up"
         android:layout_weight="0"
         android:layout_marginBottom="@dimen/activity_vertical_margin" />
 
@@ -153,7 +153,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_default_small_margin"
-        android:id="@+id/details_activity_days_view">
+        android:id="@+id/details_activity_days_view_up">
 
         <TextView
             android:layout_width="0dp"
@@ -168,7 +168,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/NULL"
-            android:id="@+id/details_activity_days_count"
+            android:id="@+id/details_activity_days_count_up"
             android:layout_weight="1"
             android:gravity="right" />
     </LinearLayout>
@@ -177,7 +177,7 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/details_activity_progress_days"
+        android:id="@+id/details_activity_progress_days_up"
         android:layout_weight="0"
         android:layout_marginBottom="@dimen/activity_vertical_margin" />
 
@@ -200,7 +200,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/NULL"
-            android:id="@+id/details_activity_hours_count"
+            android:id="@+id/details_activity_hours_count_up"
             android:layout_weight="1"
             android:gravity="right" />
     </LinearLayout>
@@ -209,7 +209,7 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/details_activity_progress_hours"
+        android:id="@+id/details_activity_progress_hours_up"
         android:layout_weight="0"
         android:layout_marginBottom="@dimen/activity_vertical_margin" />
 
@@ -233,7 +233,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/NULL"
-            android:id="@+id/details_activity_minutes_count"
+            android:id="@+id/details_activity_minutes_count_up"
             android:layout_weight="1"
             android:gravity="right" />
     </LinearLayout>
@@ -242,7 +242,7 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/details_activity_progress_minutes"
+        android:id="@+id/details_activity_progress_minutes_up"
         android:layout_weight="0"
         android:layout_marginBottom="@dimen/activity_vertical_margin" />
 
@@ -265,7 +265,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/NULL"
-            android:id="@+id/details_activity_seconds_count"
+            android:id="@+id/details_activity_seconds_count_up"
             android:layout_weight="1"
             android:gravity="right"/>
     </LinearLayout>
@@ -274,7 +274,7 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/details_activity_progress_seconds"
+        android:id="@+id/details_activity_progress_seconds_up"
         android:layout_weight="0"
         android:layout_marginBottom="@dimen/activity_vertical_margin"/>
 

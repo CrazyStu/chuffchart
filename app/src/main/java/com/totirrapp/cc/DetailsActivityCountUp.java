@@ -79,22 +79,22 @@ public class DetailsActivityCountUp extends Activity {
 
     public void setupView() {
         counter = new CounterFragment(chartStart, chartEnd);
-        targetDate = (TextView) findViewById(R.id.details_activity_target_date);
-        percent = (TextView) findViewById(R.id.details_activity_percentage);
-        monthCount = (TextView) findViewById(R.id.details_activity_months_count);
-        weekCount = (TextView) findViewById(R.id.details_activity_weeks_count);
-        dayCount = (TextView) findViewById(R.id.details_activity_days_count);
-        hourCount = (TextView) findViewById(R.id.details_activity_hours_count);
-        minuteCount = (TextView) findViewById(R.id.details_activity_minutes_count);
-        secondCount = (TextView) findViewById(R.id.details_activity_seconds_count);
+        targetDate = (TextView) findViewById(R.id.details_activity_target_date_down);
+        percent = (TextView) findViewById(R.id.details_activity_percentage_down);
+        monthCount = (TextView) findViewById(R.id.details_activity_months_count_down);
+        weekCount = (TextView) findViewById(R.id.details_activity_weeks_count_down);
+        dayCount = (TextView) findViewById(R.id.details_activity_days_count_down);
+        hourCount = (TextView) findViewById(R.id.details_activity_hours_count_down);
+        minuteCount = (TextView) findViewById(R.id.details_activity_minutes_count_down);
+        secondCount = (TextView) findViewById(R.id.details_activity_seconds_count_down);
 
-        totalProgress = (ProgressBar) findViewById(R.id.details_activity_progress_total);
-        monthProgress = (ProgressBar) findViewById(R.id.details_activity_progress_months);
-        weekProgress = (ProgressBar) findViewById(R.id.details_activity_progress_weeks);
-        dayProgress = (ProgressBar) findViewById(R.id.details_activity_progress_days);
-        hourProgress = (ProgressBar) findViewById(R.id.details_activity_progress_hours);
-        minuteProgress = (ProgressBar) findViewById(R.id.details_activity_progress_minutes);
-        secondProgress = (ProgressBar) findViewById(R.id.details_activity_progress_seconds);
+        totalProgress = (ProgressBar) findViewById(R.id.details_activity_progress_total_down);
+        monthProgress = (ProgressBar) findViewById(R.id.details_activity_progress_months_down);
+        weekProgress = (ProgressBar) findViewById(R.id.details_activity_progress_weeks_down);
+        dayProgress = (ProgressBar) findViewById(R.id.details_activity_progress_days_down);
+        hourProgress = (ProgressBar) findViewById(R.id.details_activity_progress_hours_down);
+        minuteProgress = (ProgressBar) findViewById(R.id.details_activity_progress_minutes_down);
+        secondProgress = (ProgressBar) findViewById(R.id.details_activity_progress_seconds_down);
     }
 
     public void updateDetailsView() {
@@ -111,24 +111,24 @@ public class DetailsActivityCountUp extends Activity {
     private void checkVisibility(){
         if(counter.getMonthsDone()<1){
             monthProgress.setVisibility(View.GONE);
-            findViewById(R.id.details_activity_months_view).setVisibility(View.GONE);
+            findViewById(R.id.details_activity_months_view_down).setVisibility(View.GONE);
         }else{
             monthProgress.setVisibility(View.VISIBLE);
-            findViewById(R.id.details_activity_months_view).setVisibility(View.VISIBLE);
+            findViewById(R.id.details_activity_months_view_down).setVisibility(View.VISIBLE);
         }
         if(counter.getWeeksDone()<1){
             weekProgress.setVisibility(View.GONE);
-            findViewById(R.id.details_activity_weeks_view).setVisibility(View.GONE);
+            findViewById(R.id.details_activity_weeks_view_down).setVisibility(View.GONE);
         }else{
             weekProgress.setVisibility(View.VISIBLE);
-            findViewById(R.id.details_activity_weeks_view).setVisibility(View.VISIBLE);
+            findViewById(R.id.details_activity_weeks_view_down).setVisibility(View.VISIBLE);
         }
         if(counter.getDaysDone()<1){
             dayProgress.setVisibility(View.GONE);
-            findViewById(R.id.details_activity_days_view).setVisibility(View.GONE);
+            findViewById(R.id.details_activity_days_view_down).setVisibility(View.GONE);
         }else{
             dayProgress.setVisibility(View.VISIBLE);
-            findViewById(R.id.details_activity_days_view).setVisibility(View.VISIBLE);
+            findViewById(R.id.details_activity_days_view_down).setVisibility(View.VISIBLE);
         }
     }
     private class detailsThread extends Thread {

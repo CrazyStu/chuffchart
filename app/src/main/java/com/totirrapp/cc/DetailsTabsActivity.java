@@ -8,7 +8,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -50,6 +49,7 @@ public class DetailsTabsActivity extends AppCompatActivity{
 		mSectionsPagerAdapter=new SectionsPagerAdapter(getSupportFragmentManager());
 		mViewPager=(ViewPager)findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
+		mViewPager.setPageMargin(50);
 		try {
 			chartStart = getIntent().getExtras().getString("start");
 			chartEnd = getIntent().getExtras().getString("end");
@@ -59,8 +59,8 @@ public class DetailsTabsActivity extends AppCompatActivity{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		setupView();
+//
+//		setupViewCountDown();
 	}
 	protected void onPause(){
 		super.onPause();
@@ -79,29 +79,91 @@ public class DetailsTabsActivity extends AppCompatActivity{
 			e.printStackTrace();
 		}
 	}
-	public void setupView() {
-		Log.i("setupView()", "Begin Setup with start/end"+chartStart+"/"+chartEnd);
-//		counter = new CounterFragment(chartStart, chartEnd);
-		targetDate = (TextView) findViewById(R.id.details_activity_target_date);
-		percent = (TextView) findViewById(R.id.details_activity_percentage);
-		monthCount = (TextView) findViewById(R.id.details_activity_months_count);
-		weekCount = (TextView) findViewById(R.id.details_activity_weeks_count);
-		dayCount = (TextView) findViewById(R.id.details_activity_days_count);
-		hourCount = (TextView) findViewById(R.id.details_activity_hours_count);
-		minuteCount = (TextView) findViewById(R.id.details_activity_minutes_count);
-		secondCount = (TextView) findViewById(R.id.details_activity_seconds_count);
+	public void setupViewCountUp() {
+		targetDate = (TextView) findViewById(R.id.details_activity_target_date_up);
+		percent = (TextView) findViewById(R.id.details_activity_percentage_up);
+		monthCount = (TextView) findViewById(R.id.details_activity_months_count_up);
+		weekCount = (TextView) findViewById(R.id.details_activity_weeks_count_up);
+		dayCount = (TextView) findViewById(R.id.details_activity_days_count_up);
+		hourCount = (TextView) findViewById(R.id.details_activity_hours_count_up);
+		minuteCount = (TextView) findViewById(R.id.details_activity_minutes_count_up);
+		secondCount = (TextView) findViewById(R.id.details_activity_seconds_count_up);
 
-		totalProgress = (ProgressBar) findViewById(R.id.details_activity_progress_total);
-		monthProgress = (ProgressBar) findViewById(R.id.details_activity_progress_months);
-		weekProgress = (ProgressBar) findViewById(R.id.details_activity_progress_weeks);
-		dayProgress = (ProgressBar) findViewById(R.id.details_activity_progress_days);
-		hourProgress = (ProgressBar) findViewById(R.id.details_activity_progress_hours);
-		minuteProgress = (ProgressBar) findViewById(R.id.details_activity_progress_minutes);
-		secondProgress = (ProgressBar) findViewById(R.id.details_activity_progress_seconds);
+		totalProgress = (ProgressBar) findViewById(R.id.details_activity_progress_total_up);
+		monthProgress = (ProgressBar) findViewById(R.id.details_activity_progress_months_up);
+		weekProgress = (ProgressBar) findViewById(R.id.details_activity_progress_weeks_up);
+		dayProgress = (ProgressBar) findViewById(R.id.details_activity_progress_days_up);
+		hourProgress = (ProgressBar) findViewById(R.id.details_activity_progress_hours_up);
+		minuteProgress = (ProgressBar) findViewById(R.id.details_activity_progress_minutes_up);
+		secondProgress = (ProgressBar) findViewById(R.id.details_activity_progress_seconds_up);
 	}
-	public void updateDetailsView() {
-		Log.i("detailsFrag", "updateDetailsView()");
-		setupView();
+	public void updateDetailsViewCountUp() {
+//		Log.i("detailsFrag", "updateDetailsView()");
+		setupViewCountUp();
+		targetDate.setText(chartStart);
+		percent.setText(counter.getPercentDone() + "%");
+		monthCount.setText(Integer.toString(counter.getMonthsDone()));
+		weekCount.setText(Integer.toString(counter.getWeeksDone()));
+		dayCount.setText(Integer.toString(counter.getDaysDone()));
+		hourCount.setText(Integer.toString(counter.getHoursDone()));
+		minuteCount.setText(Integer.toString(counter.getMinsDone()));
+		secondCount.setText(Integer.toString(counter.getSecsDone()));
+		totalProgress.setProgress(counter.getPercentDone());
+		monthProgress.setProgress((int)((float)counter.getMonthsDone()/12*100));
+		weekProgress.setProgress((int)((float)counter.getWeeksDone()/4*100));
+		dayProgress.setProgress((int)((float)counter.getDaysDone()/7*100));
+		hourProgress.setProgress((int) ((float)counter.getHoursDone() / 24*100));
+		minuteProgress.setProgress((int) ((float)counter.getMinsDone()/60*100));
+		secondProgress.setProgress((int) ((float)counter.getSecsDone()/60*100));
+		checkVisibilityCountUp();
+	}
+	private void checkVisibilityCountUp(){
+		if(counter.getMonthsDone()<1){
+			monthProgress.setVisibility(View.GONE);
+			findViewById(R.id.details_activity_months_view_up).setVisibility(View.GONE);
+		}else{
+			monthProgress.setVisibility(View.VISIBLE);
+			findViewById(R.id.details_activity_months_view_up).setVisibility(View.VISIBLE);
+		}
+		if(counter.getWeeksDone()<1){
+			weekProgress.setVisibility(View.GONE);
+			findViewById(R.id.details_activity_weeks_view_up).setVisibility(View.GONE);
+		}else{
+			weekProgress.setVisibility(View.VISIBLE);
+			findViewById(R.id.details_activity_weeks_view_up).setVisibility(View.VISIBLE);
+		}
+		if(counter.getDaysDone()<1){
+			dayProgress.setVisibility(View.GONE);
+			findViewById(R.id.details_activity_days_view_up).setVisibility(View.GONE);
+		}else{
+			dayProgress.setVisibility(View.VISIBLE);
+			findViewById(R.id.details_activity_days_view_up).setVisibility(View.VISIBLE);
+		}
+	}
+
+
+
+	public void setupViewCountDown() {
+		targetDate = (TextView) findViewById(R.id.details_activity_target_date_down);
+		percent = (TextView) findViewById(R.id.details_activity_percentage_down);
+		monthCount = (TextView) findViewById(R.id.details_activity_months_count_down);
+		weekCount = (TextView) findViewById(R.id.details_activity_weeks_count_down);
+		dayCount = (TextView) findViewById(R.id.details_activity_days_count_down);
+		hourCount = (TextView) findViewById(R.id.details_activity_hours_count_down);
+		minuteCount = (TextView) findViewById(R.id.details_activity_minutes_count_down);
+		secondCount = (TextView) findViewById(R.id.details_activity_seconds_count_down);
+
+		totalProgress = (ProgressBar) findViewById(R.id.details_activity_progress_total_down);
+		monthProgress = (ProgressBar) findViewById(R.id.details_activity_progress_months_down);
+		weekProgress = (ProgressBar) findViewById(R.id.details_activity_progress_weeks_down);
+		dayProgress = (ProgressBar) findViewById(R.id.details_activity_progress_days_down);
+		hourProgress = (ProgressBar) findViewById(R.id.details_activity_progress_hours_down);
+		minuteProgress = (ProgressBar) findViewById(R.id.details_activity_progress_minutes_down);
+		secondProgress = (ProgressBar) findViewById(R.id.details_activity_progress_seconds_down);
+	}
+	public void updateDetailsViewCountDown() {
+//		Log.i("detailsFrag", "updateDetailsView()");
+		setupViewCountDown();
 		targetDate.setText(chartEnd);
 		percent.setText(counter.getPercentLeft() + "%");
 		monthCount.setText(Integer.toString(counter.getMonthsLeft()));
@@ -111,34 +173,35 @@ public class DetailsTabsActivity extends AppCompatActivity{
 		minuteCount.setText(Integer.toString(counter.getMinsLeft()));
 		secondCount.setText(Integer.toString(counter.getSecsLeft()));
 		totalProgress.setProgress(counter.getPercentLeft());
-					monthProgress.setProgress((int)((float)counter.getMonthsLeft()/12*100));
-					weekProgress.setProgress((int)((float)counter.getWeeksLeft()/4*100));
-					dayProgress.setProgress((int)((float)counter.getDaysLeft()/7*100));
-					hourProgress.setProgress((int) ((float)counter.getHoursLeft() / 24*100));
-					minuteProgress.setProgress((int) ((float)counter.getMinsLeft()/60*100));
-					secondProgress.setProgress((int) ((float)counter.getSecsLeft()/60*100));
+		monthProgress.setProgress((int)((float)counter.getMonthsLeft()/12*100));
+		weekProgress.setProgress((int)((float)counter.getWeeksLeft()/4*100));
+		dayProgress.setProgress((int)((float)counter.getDaysLeft()/7*100));
+		hourProgress.setProgress((int) ((float)counter.getHoursLeft() / 24*100));
+		minuteProgress.setProgress((int) ((float)counter.getMinsLeft()/60*100));
+		secondProgress.setProgress((int) ((float)counter.getSecsLeft()/60*100));
+		checkVisibilityCountDown();
 	}
-	private void checkVisibility(){
+	private void checkVisibilityCountDown(){
 		if(counter.getMonthsLeft()<1){
 			monthProgress.setVisibility(View.GONE);
-			findViewById(R.id.details_activity_months_view).setVisibility(View.GONE);
+			findViewById(R.id.details_activity_months_view_down).setVisibility(View.GONE);
 		}else{
 			monthProgress.setVisibility(View.VISIBLE);
-			findViewById(R.id.details_activity_months_view).setVisibility(View.VISIBLE);
+			findViewById(R.id.details_activity_months_view_down).setVisibility(View.VISIBLE);
 		}
 		if(counter.getWeeksLeft()<1){
 			weekProgress.setVisibility(View.GONE);
-			findViewById(R.id.details_activity_weeks_view).setVisibility(View.GONE);
+			findViewById(R.id.details_activity_weeks_view_down).setVisibility(View.GONE);
 		}else{
 			weekProgress.setVisibility(View.VISIBLE);
-			findViewById(R.id.details_activity_weeks_view).setVisibility(View.VISIBLE);
+			findViewById(R.id.details_activity_weeks_view_down).setVisibility(View.VISIBLE);
 		}
 		if(counter.getDaysLeft()<1){
 			dayProgress.setVisibility(View.GONE);
-			findViewById(R.id.details_activity_days_view).setVisibility(View.GONE);
+			findViewById(R.id.details_activity_days_view_down).setVisibility(View.GONE);
 		}else{
 			dayProgress.setVisibility(View.VISIBLE);
-			findViewById(R.id.details_activity_days_view).setVisibility(View.VISIBLE);
+			findViewById(R.id.details_activity_days_view_down).setVisibility(View.VISIBLE);
 		}
 	}
 
@@ -156,12 +219,10 @@ public class DetailsTabsActivity extends AppCompatActivity{
 				return new DetailsFragmentCountUp();
 			}
 		}
-		
 		@Override
 		public int getCount(){
 			return 2;
 		}
-
 	}
 
 	private class detailsThread extends Thread {
@@ -172,17 +233,14 @@ public class DetailsTabsActivity extends AppCompatActivity{
 					counter.updateCounter();
 					runOnUiThread(new Runnable() {
 						public void run() {
-							updateDetailsView();
-							checkVisibility();
+							if(mViewPager.getCurrentItem()==0){
+								updateDetailsViewCountUp();
+							}else{
+								updateDetailsViewCountDown();
+							}
+
 						}
 					});
-//					totalProgress.setProgress(counter.getPercentLeft());
-//					monthProgress.setProgress((int)((float)counter.getMonthsLeft()/12*100));
-//					weekProgress.setProgress((int)((float)counter.getWeeksLeft()/4*100));
-//					dayProgress.setProgress((int)((float)counter.getDaysLeft()/7*100));
-//					hourProgress.setProgress((int) ((float)counter.getHoursLeft() / 24*100));
-//					minuteProgress.setProgress((int) ((float)counter.getMinsLeft()/60*100));
-//					secondProgress.setProgress((int) ((float)counter.getSecsLeft()/60*100));
 					sleep(1000);
 				} catch (Exception e) {
 					e.printStackTrace();
