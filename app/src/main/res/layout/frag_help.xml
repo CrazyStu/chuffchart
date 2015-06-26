@@ -1,0 +1,118 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frag_help"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:background="#8c000000"
+    android:paddingBottom="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+ >
+
+
+    <ImageView
+        android:id="@+id/progBar"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="0dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/progBar"
+        android:scaleType="fitXY"
+        android:src="@drawable/progress"
+        android:layout_margin="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:layout_marginRight="0dp" />
+
+    <TextView
+        android:id="@+id/percDoneText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@id/progBar"
+        android:layout_marginBottom="0dp"
+        android:gravity="center"
+        android:text="@string/percHolder"
+        android:textColor="#000000"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/progBar"
+        android:background="#66FFFFFF"
+        android:orientation="vertical"
+        android:id="@+id/chart_title">
+
+        <TextView
+            android:id="@+id/titleTop"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="@string/press_here"
+            android:textColor="#000000"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/titleBot"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="@string/change_title"
+            android:textColor="#000000"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/percDoneText"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/progBar"
+        android:background="#66FFFFFF"
+        android:gravity="bottom"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/timeDoneTextView"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="@string/press_here"
+            android:textColor="#000000"
+            android:textSize="35sp" />
+
+        <TextView
+            android:id="@+id/timeLeftTextView"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="@string/change_dates"
+            android:textColor="#000000"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/instructions"
+        android:id="@+id/textView"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_margin="200dp"
+        android:textSize="30sp"
+        android:textAlignment="gravity"
+        android:singleLine="false"
+        android:padding="0dp"
+        android:maxWidth="250dp" />
+
+</RelativeLayout>
