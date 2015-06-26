@@ -128,6 +128,8 @@ public class NavigationDrawerFragment extends Fragment{
 		ActionBar actionBar=getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		actionBar.setHomeButtonEnabled(true);
+		//this is why there is no action bar
+		actionBar.hide();
 		
 		// ActionBarDrawerToggle ties together the the proper interactions
 		// between the navigation drawer and the action bar app icon.
@@ -233,7 +235,7 @@ public class NavigationDrawerFragment extends Fragment{
 		// showGlobalContextActionBar, which controls the top-left area of the action bar.
 		if(mDrawerLayout!=null&&isDrawerOpen()){
 			inflater.inflate(R.menu.global, menu);
-			showGlobalContextActionBar();
+//			showGlobalContextActionBar();
 		}
 		super.onCreateOptionsMenu(menu, inflater);
 	}
@@ -262,11 +264,11 @@ public class NavigationDrawerFragment extends Fragment{
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
 		actionBar.setTitle(R.string.app_name);
 	}
-	
+
 	private ActionBar getActionBar(){
 		return ((AppCompatActivity)getActivity()).getSupportActionBar();
 	}
-	
+
 	/**
 	 * Callbacks interface that all activities using this fragment must implement.
 	 */

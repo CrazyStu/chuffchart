@@ -119,7 +119,6 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_default_small_margin"
         android:id="@+id/details_activity_weeks_view_up">
 
         <TextView
@@ -152,7 +151,6 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_default_small_margin"
         android:id="@+id/details_activity_days_view_up">
 
         <TextView
@@ -185,7 +183,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_default_small_margin">
+        >
 
         <TextView
             android:layout_width="0sp"
@@ -217,7 +215,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_default_small_margin" >
+        >
 
         <TextView
             android:layout_width="0sp"
@@ -250,7 +248,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_default_small_margin">
+        >
 
         <TextView
             android:layout_width="0sp"
