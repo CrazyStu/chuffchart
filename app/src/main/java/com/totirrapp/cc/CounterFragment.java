@@ -65,7 +65,7 @@ public class CounterFragment {
 
     public void updateCounter() {
         try {
-            Log.i("ChartFragCounter", "Update Counter");
+//            Log.i("ChartFragCounter", "Update Counter");
             calCurrent.setTime(new Date());
             calTarget.set(endYear, endMonth, endDay, 0, 0, 0);
             calStart.set(startYear, startMonth, startDay, 0, 0, 0);

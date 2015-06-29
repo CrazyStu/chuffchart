@@ -34,17 +34,18 @@ public class databaseReader {
         db.close();
         return values;
     }
-    public static void getChartCount(String x){
-        Cursor myCursor;
+    public static int getChartCount(String x){
+        int count;
         try {
             db.open(x);
-            DBV.chartCount = db.chartCount();
+            count = db.chartCount();
             db.close();
-            Log.e("#-- DBR Chart Count--# ", DBV.chartCount + " charts found");
+            Log.e("#-- DBR Chart Count--# ", count + " charts found");
         } catch (SQLException e) {
             Log.e("DBReadAll error", "failed to count database");
             throw e;
         }
+        return count;
     }
     public static String getChartName(int x){
         db.open("get chart Name");

@@ -12,7 +12,7 @@ public class DetailsFragmentCountDown extends Fragment{
     public DetailsFragmentCountDown() {    }
 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.details_activity_count_down,container, false);
+		View rootView = inflater.inflate(R.layout.activity_details_count_down,container, false);
 		return rootView;
 	}
 

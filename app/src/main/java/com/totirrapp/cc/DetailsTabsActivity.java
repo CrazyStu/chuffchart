@@ -62,8 +62,10 @@ public class DetailsTabsActivity extends AppCompatActivity{
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		setTheme(R.style.AppTheme);
+//		setTheme(R.style.AppTheme);
+//		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//		getWindow().setFlags(WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER,WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER);
+//		setTheme(R.style.AppTheme);
 		setContentView(R.layout.activity_detail_tabs);
 		mSectionsPagerAdapter=new SectionsPagerAdapter(getSupportFragmentManager());
 		mViewPager=(ViewPager)findViewById(R.id.pager);
@@ -74,7 +76,6 @@ public class DetailsTabsActivity extends AppCompatActivity{
 			chartEnd = getIntent().getExtras().getString("end");
 			Log.e("gotExtras?", "start#end " + chartStart + "#" + chartEnd);
 			counter = new CounterFragment(chartStart, chartEnd);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

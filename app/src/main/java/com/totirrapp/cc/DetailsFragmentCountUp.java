@@ -11,7 +11,7 @@ public class DetailsFragmentCountUp extends Fragment{
     public DetailsFragmentCountUp() {}
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.details_activity_count_up,container, false);
+        View rootView = inflater.inflate(R.layout.activity_details_count_up,container, false);
         return rootView;
     }
 

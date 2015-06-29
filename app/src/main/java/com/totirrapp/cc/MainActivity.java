@@ -1,6 +1,8 @@
 package com.totirrapp.cc;
 
 import android.app.Dialog;
+import android.app.WallpaperManager;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -10,22 +12,16 @@ import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
-import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.support.v4.widget.DrawerLayout;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -37,29 +33,28 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
 		implements NavigationDrawerFragment.NavigationDrawerCallbacks,ChartFragment.clickCallback, NewFragment.newChartCallback{
+
 	public static Context			context;
 	private static int				RESULT_LOAD_IMAGE	= 1;
 	private String					noImage				= "noImage";
 	private boolean					running				= false;
-	private detailsThread			MT;
+	private DetailsThread DetailsThread;
+	private int chartCount = 0;
 	private Bitmap bg1;
 	private int screenHMem;
 	private int screenWMem;
 	private String newStartDate;
 	private String newEndDate;
 	private static String[] test;
-//	private FragmentManager 		fm = this.getSupportFragmentManager();
 	private ArrayList<ChartFragment> chartFragList;
 	private int width;
 	private int height;
 	private int currentPageNo;
-	private NavigationDrawerFragment mNavigationDrawerFragment;
-	private CharSequence mTitle;
-	
+//	private NavigationDrawerFragment mNavigationDrawerFragment;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		context = this.getBaseContext();
 		new databaseReader("Activity Create");
 		Display display = getWindowManager().getDefaultDisplay();
@@ -69,37 +64,32 @@ public class MainActivity extends AppCompatActivity
 		height = size.y;
 		initCharts();
 		setContentView(R.layout.activity_main);
-		mNavigationDrawerFragment=(NavigationDrawerFragment)
-				getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-		mTitle=getTitle();
-
-		// Set up the drawer.
-		mNavigationDrawerFragment.setUp(
-				R.id.navigation_drawer,
-				(DrawerLayout)findViewById(R.id.drawer_layout));
+		NavigationDrawerFragment mNavigationDrawerFragment=(NavigationDrawerFragment)getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,(DrawerLayout)findViewById(R.id.drawer_layout));
 	}
 	protected void onPause(){
 		super.onPause();
 		running = false;
-		Log.e("MT State", MT.getState() + "");
+		Log.e("Thread State", DetailsThread.getState() + "");
 	}
 	protected void onResume(){
 		super.onResume();
 		running = true;
 		try {
-			MT = null;
-			MT = new detailsThread();
-			MT.start();
+			DetailsThread= null;
+			DetailsThread= new DetailsThread();
+			DetailsThread.start();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	public void initCharts(){
+			if(chartFragList!=null)	chartFragList.clear();
 			chartFragList = new ArrayList<ChartFragment>();
-			databaseReader.getChartCount("initCharts()");
+			chartCount = databaseReader.getChartCount("initCharts()");
 			int x=0;
 			ChartFragment chartFrag;
-			while(x<DBV.chartCount){
+			while(x<chartCount){
 				Log.e("#--Create Chart--# ", "Making chart no#"+x);
 				chartFrag=new ChartFragment();
 				chartFragList.add(x, chartFrag);
@@ -121,7 +111,7 @@ public class MainActivity extends AppCompatActivity
 		while(x<y){
 			test[x]=chartFragList.get(x).getChartName();
 			x++;
-		};
+		}
 		test[x++]="New";
 		test[x]="Help";
 
@@ -133,76 +123,41 @@ public class MainActivity extends AppCompatActivity
 	public void onNavigationDrawerItemSelected(int position){
 		Fragment fragment;
 		currentPageNo = position;
-		if (position <= DBV.chartCount-1) {
+		if (position <= chartCount-1) {
 			fragment= chartFragList.get(position);
-			mTitle=getPageTitle();
-		}else if(position == DBV.chartCount) {
+//			mTitle=getPageTitle();
+		}else if(position == chartCount) {
 			fragment= new NewFragment();
-			mTitle="New Chart?";
+//			mTitle="New Chart?";
 		} else {
 			fragment = new HelpFragment();
-			mTitle="Help";
+//			mTitle="Help";
 		}
 		FragmentManager fragmentManager=getSupportFragmentManager();
 		fragmentManager.beginTransaction()
 				.replace(R.id.container, fragment)
 				.commit();
 	}
-
-	public void restoreActionBar(){
-		ActionBar actionBar=getSupportActionBar();
-//		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-		actionBar.setDisplayShowTitleEnabled(true);
-//		actionBar.hide();
-		actionBar.setTitle(mTitle);
-	}
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu){
-		if(!mNavigationDrawerFragment.isDrawerOpen()){
-			// Only show items in the action bar relevant to this screen
-			// if the drawer is not showing. Otherwise, let the drawer
-			// decide what to show in the action bar.
-			getMenuInflater().inflate(R.menu.main, menu);
-			restoreActionBar();
-			return true;
-		}
-		return super.onCreateOptionsMenu(menu);
-	}
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item){
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id=item.getItemId();
-		
-		//noinspection SimplifiableIfStatement
-		if(id==R.id.action_settings){
-			return true;
-		}
-		
-		return super.onOptionsItemSelected(item);
-	}
-	public Bitmap getBackground(String url,int chartNo, int screenW,int screenH){
+	public Bitmap getBackground(String url, int screenW,int screenH){
 		// Context context = MainActivity.context;
-		Log.i("BgHandler", "Start Bitmap Processing");
 		if (url.equals(noImage)) {
 			Log.i("BgHandler", "No BG set Loading default background");
-			useWallpaper(chartNo);
 			bg1=null;
 		} else {
 			BitmapFactory.Options bgOptions = new BitmapFactory.Options();
-			Bitmap test;
+//			Bitmap test;
 			bgOptions.inJustDecodeBounds = true;
 			try {
-				test = BitmapFactory.decodeFile(url, bgOptions);
+//				test = BitmapFactory.decodeFile(url, bgOptions);
+				BitmapFactory.decodeFile(url, bgOptions);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
 			if (bgOptions.outHeight > 0) {
-				Log.i("BgHandler", "Image found---Loading selected picture");
+				Log.i("BgHandler", "Load Image @"+url);
 				bg1 = loadSelectedImage(url, screenW, screenH);
 			} else {
-				Log.i("BgHandler", "Image not found---Loading default background");
+				Log.i("BgHandler", "Image not found---Loading Android Wallpaper");
 				bg1=null;
 			}
 		}
@@ -220,35 +175,33 @@ public class MainActivity extends AppCompatActivity
 		bg1 = BitmapFactory.decodeFile(bgURL, bgOptions);
 		int imageHeight = bgOptions.outHeight;
 		int imageWidth = bgOptions.outWidth;
-		float ScreenAspect = (float) screenHMem / (float) screenWMem;
+//		float ScreenAspect = (float) screenHMem / (float) screenWMem;
 		float ImageAspect = (float) bgOptions.outHeight / (float) bgOptions.outWidth;
 		if (ImageAspect < 1) {
 			landscape = true;
 		}
-		Log.i("Screen","W="+screenWMem+" H= " + screenHMem+"Landscape=" + landscape);
-		Log.i("Image","W="+bgOptions.outWidth+" H= " + bgOptions.outHeight+"Landscape=" + landscape);
-		int iscale;
+		Log.i("Screen","W"+screenWMem+" H"+screenHMem+" Landscape=" + landscape);
+		Log.i("Image","W"+bgOptions.outWidth+" H"+bgOptions.outHeight+" Landscape=" + landscape);
+		int iScale;
 		if (landscape) {
 			ImageAspect = (float) bgOptions.outWidth / (float) bgOptions.outHeight;
 			if (imageHeight > screenHMem) {
-				iscale = (int) ((float) imageHeight / (float) screenHMem);
-				bgOptions.inSampleSize = iscale;
+				iScale = (int) ((float) imageHeight / (float) screenHMem);
+				bgOptions.inSampleSize = iScale;
 			} else {
-				iscale = 1;
-				bgOptions.inSampleSize = iscale;
+				iScale = 1;
+				bgOptions.inSampleSize = iScale;
 			}
 		} else {
 			ImageAspect = (float) bgOptions.outHeight / (float) bgOptions.outWidth;
 			if (imageWidth > screenWMem) {
-				iscale = (int) ((float) imageWidth / (float) screenWMem) + 2;
-				bgOptions.inSampleSize = iscale;
+				iScale = (int) ((float) imageWidth / (float) screenWMem) + 2;
+				bgOptions.inSampleSize = iScale;
 			} else {
-				iscale = 1;
-				bgOptions.inSampleSize = iscale;
+				iScale = 1;
+				bgOptions.inSampleSize = iScale;
 			}
 		}
-
-		Log.i("Image","SampleSize="+iscale);
 		// =============Read rotation==============================
 		ExifInterface exif = null;
 		try {
@@ -257,15 +210,16 @@ public class MainActivity extends AppCompatActivity
 			e.printStackTrace();
 		}
 		int orientation = 0;
+		String tag = ExifInterface.TAG_ORIENTATION;
 		try{
-			orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+			orientation = exif.getAttributeInt(tag, 1);
 		}catch (NullPointerException e){
 			e.printStackTrace();
 		}
 		// =============Get full image and resize=====================
 		bgOptions.inJustDecodeBounds = false;
 		bg1 = BitmapFactory.decodeFile(bgURL, bgOptions);
-		Log.i("Image", "Width="+bg1.getWidth()+"Height= " + bg1.getHeight());
+		Log.i("Image", "Sample="+iScale+"W"+bg1.getWidth()+"H"+bg1.getHeight());
 		if (landscape) {
 			bg1 = Bitmap.createScaledBitmap(bg1, (int) (screenHMem * ImageAspect), screenHMem, true);
 		} else {
@@ -286,11 +240,9 @@ public class MainActivity extends AppCompatActivity
 		bg1 = Bitmap.createBitmap(bg1, 0, 0, bg1.getWidth(), bg1.getHeight(), matrix, true);
 		return bg1;
 	}
-	private void useWallpaper(int chartNo){
-		chartFragList.get(currentPageNo).removeBackground();
-	}
+
 	public void updateHomeView(){
-		Log.e(">>UpdateChart<<", "FragID="+currentPageNo+"/Background="+chartFragList.get(currentPageNo).getChartBgUrl());
+		Log.e("#---UpdateView---#", "Chart#"+currentPageNo+"/IMG#"+chartFragList.get(currentPageNo).getChartBgUrl());
 		try{
 			chartFragList.get(currentPageNo).updateChartView();
 		}catch (Exception e){
@@ -335,8 +287,6 @@ public class MainActivity extends AppCompatActivity
 		TextView submitChart = (TextView) newChartDialog.findViewById(R.id.button2);
 		submitChart.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View view) {
-//				mNavigationDrawerFragment.get
-				int x = currentPageNo;
 				String t1 = newTitle.getText().toString();
 				String t2 = "I can't wait...";
 				String t3 = "for what?";
@@ -389,7 +339,7 @@ public class MainActivity extends AppCompatActivity
 					newStartDate = dayOfMonth + "/" + (month + 1) + "/" + year;
 					if(picker1.getDate()>endDateMills){
 						newEndDate =  (dayOfMonth+1) + "/" + (month + 1) + "/" + year;
-					};
+					}
 				}
 			};
 			doneListener = new View.OnClickListener() {
@@ -413,7 +363,7 @@ public class MainActivity extends AppCompatActivity
 					newEndDate = dayOfMonth + "/" + (month + 1) + "/" + year;
 					if(picker1.getDate()<startDateMills){
 						newStartDate =  (dayOfMonth-1) + "/" + (month + 1) + "/" + year;
-					};
+					}
 				}
 			};
 			doneListener = new View.OnClickListener() {
@@ -470,7 +420,8 @@ public class MainActivity extends AppCompatActivity
 				dialog.dismiss();
 				databaseReader.updateBGURL(getPageTitle(), noImage);
 				chartFragList.get(currentPageNo).readChartValues();
-				useWallpaper(currentPageNo);
+				ImageThread imageThread = new ImageThread();
+				imageThread.run();
 			}
 		});
 		TextView galleryButton = (TextView) dialog.findViewById(R.id.galleryButton);
@@ -511,16 +462,17 @@ public class MainActivity extends AppCompatActivity
 	}
 	public void removeCurrentPage(){
 		databaseReader.deleteChart(getPageTitle());
+		FragmentManager fragmentManager=getSupportFragmentManager();
+		fragmentManager.beginTransaction().remove(chartFragList.get(currentPageNo)).commit();
 		recreate();
 	}
 
-	private class detailsThread extends Thread {
+	private class DetailsThread extends Thread {
 		public void run(){
-			Log.e("MT State", MT.getState()+"");
+			Log.e("Thread State", DetailsThread.getState()+"");
 			while (running) {
-				if(currentPageNo<=DBV.chartCount-1) {
+				if(currentPageNo<=chartCount-1) {
 					try {
-//						SetCounter.updateCounter();
 						runOnUiThread(new Runnable() {
 							public void run() {
 								updateHomeView();
@@ -532,7 +484,7 @@ public class MainActivity extends AppCompatActivity
 					}
 				}
 			}
-			Log.e("MT State", MT.getState() +"stopped");
+			Log.e("Thread State", DetailsThread.getState() +"stopped");
 		}
 	}
 	private class ImageThread extends Thread {
@@ -541,13 +493,17 @@ public class MainActivity extends AppCompatActivity
 			try {
 				int x =currentPageNo;
 				String url = chartFragList.get(x).getChartBgUrl();
-				BitmapDrawable bgImage = new BitmapDrawable(context.getResources(), getBackground(url,x,width, height));
-				bgImage.setGravity(Gravity.CENTER);
-				if(bgImage==null){
-					useWallpaper(x);
-				}else{
-					chartFragList.get(x).setNewBackground(bgImage);
+				BitmapDrawable bgImage = new BitmapDrawable(context.getResources(), getBackground(url,width, height));
+//				bgImage.setGravity(Gravity.CENTER);
+				if(bgImage.getBitmap()==null){
+					bgImage = (BitmapDrawable)WallpaperManager.getInstance(context).getDrawable();
+//					bgImage.setGravity(Gravity.CENTER);
+//					chartFragList.get(x).setNewBackground(bgImage);
+//				}else{
+//					chartFragList.get(x).setNewBackground(bgImage);
 				}
+				bgImage.setGravity(Gravity.CENTER);
+				chartFragList.get(x).setNewBackground(bgImage);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

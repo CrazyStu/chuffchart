@@ -10,7 +10,14 @@
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
         -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar"/>
+    <!--android.R.attr#windowShowWallpaper-->
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <!--<item name="android:background">@android:color/transparent</item>-->
+        <item name="android:windowFullscreen">true</item>
+        <!--<item name="android:windowShowWallpaper">true</item>-->
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+
+    </style>
     <style name="AppThemeW" parent="@android:style/Theme.Wallpaper.NoTitleBar.Fullscreen"/>
     <style name="AppThemeHW" parent="@android:style/Theme.Holo.Wallpaper.NoTitleBar"/>
 

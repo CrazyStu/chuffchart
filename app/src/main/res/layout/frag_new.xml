@@ -6,9 +6,8 @@
     android:paddingBottom="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    style="@android:style/Theme.Holo.Light.NoActionBar.Fullscreen"
                 android:paddingLeft="0dp"
-                android:background="#32ffffff">
+                android:background="@android:color/transparent">
 
 
     <TextView
