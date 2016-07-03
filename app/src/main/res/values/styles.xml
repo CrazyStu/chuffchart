@@ -11,7 +11,7 @@
             backward-compatibility can go here.
         -->
     <!--android.R.attr#windowShowWallpaper-->
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!--<item name="android:background">@android:color/transparent</item>-->
         <item name="android:windowFullscreen">true</item>
         <!--<item name="android:windowShowWallpaper">true</item>-->
@@ -20,5 +20,9 @@
     </style>
     <style name="AppThemeW" parent="@android:style/Theme.Wallpaper.NoTitleBar.Fullscreen"/>
     <style name="AppThemeHW" parent="@android:style/Theme.Holo.Wallpaper.NoTitleBar"/>
+
+    <style name="ccTheme" parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
 
 </resources>
